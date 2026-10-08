@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import { NAV, SITE, isCurrent } from "../data/site";
 
 interface Props {
@@ -29,6 +30,7 @@ const path = Astro.url.pathname;
     <meta property="og:url" content={new URL(path, SITE.url).href} />
     <meta property="og:image" content={new URL("/og.jpg", SITE.url).href} />
     <meta property="og:locale" content="es_CL" />
+    <ClientRouter />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     {NAV.filter((item) => !isCurrent(path, item.href)).map((item) => (
       <link rel="prefetch" href={item.href} />
@@ -67,7 +69,7 @@ const path = Astro.url.pathname;
             </a>
           ))}
         </nav>
-        <details class="relative lg:hidden">
+        <details class="nav-fold relative lg:hidden">
           <summary class="inline-flex size-11 list-none items-center justify-center border border-line bg-surface">
             <span class="sr-only">Abrir menú</span>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

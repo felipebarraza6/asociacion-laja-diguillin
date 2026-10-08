@@ -54,6 +54,18 @@
     html {
       scroll-behavior: auto;
     }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
   }
 }
 
@@ -74,6 +86,13 @@
     min-height: 2.75rem;
     padding: 0.6rem 1.15rem;
     font-weight: 600;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      scale 150ms ease;
+  }
+  .btn:active {
+    scale: 0.96;
   }
   .btn-primary {
     background: var(--color-canal);
@@ -129,4 +148,133 @@
       color-mix(in srgb, var(--color-canal) 7%, transparent) 23px
     );
   }
+}
+
+header {
+  view-transition-name: site-header;
+}
+footer {
+  view-transition-name: site-footer;
+}
+
+::view-transition-old(root) {
+  animation: canal-out 220ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+  animation: canal-in 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+::view-transition-group(site-header),
+::view-transition-group(site-footer) {
+  animation: none;
+}
+
+.hero-copy > * {
+  animation: canal-in 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-copy > *:nth-child(1) { animation-delay: 40ms; }
+.hero-copy > *:nth-child(2) { animation-delay: 120ms; }
+.hero-copy > *:nth-child(3) { animation-delay: 190ms; }
+.hero-copy > *:nth-child(4) { animation-delay: 260ms; }
+.hero-copy > *:nth-child(5) { animation-delay: 330ms; }
+
+.kicker::after {
+  content: "";
+  display: block;
+  width: 2.25rem;
+  height: 2px;
+  margin-top: 0.55rem;
+  background: var(--color-wheat);
+  transform-origin: left;
+  animation: rule-draw 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.canal-sheen {
+  background-image: linear-gradient(
+    105deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-foam) 28%, transparent) 42%,
+    transparent 68%
+  );
+  background-size: 220% 100%;
+  animation: canal-flow 9s linear infinite;
+}
+
+.photo-frame img {
+  transform-origin: center;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.photo-frame:hover img {
+  transform: scale(1.045);
+}
+.hero-photo img {
+  animation: canal-drift 22s ease-in-out infinite alternate;
+}
+
+.nav-fold::details-content {
+  block-size: 0;
+  overflow: clip;
+  opacity: 0;
+  transition:
+    block-size 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 180ms ease,
+    content-visibility 280ms allow-discrete;
+}
+.nav-fold[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+main > header,
+main > section,
+main section {
+  animation: canal-in 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 18%;
+}
+main > section:first-child {
+  animation: none;
+}
+
+main li,
+main article {
+  transition:
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms ease,
+    background-color 240ms ease;
+}
+main li:hover,
+main article:hover {
+  transform: translateY(-3px);
+}
+
+@keyframes canal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@keyframes canal-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    filter: blur(3px);
+  }
+}
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes canal-flow {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+@keyframes canal-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
 }

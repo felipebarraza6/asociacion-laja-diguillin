@@ -14,7 +14,7 @@ interface Props {
 const { src, alt, width, height, class: className = "", caption = REF_CAPTION, priority = false } = Astro.props;
 ---
 
-<figure class:list={["relative overflow-hidden bg-canal-deep", className]}>
+<figure class:list={["photo-frame relative overflow-hidden bg-canal-deep", className]}>
   <img
     src={src}
     alt={alt}
