@@ -1,0 +1,242 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "../components/PageIntro.astro";
+import { BOARD, SITE, TRANSPARENCY } from "../data/site";
+
+const docs = [
+  {
+    title: `${SITE.resolution} de 2012`,
+    detail: `Aprueba la inscripción. Fecha ${SITE.resolutionDate}. Expediente ${SITE.expediente}. En el Registro figura como “Resolución Personalidad Jurídica”.`,
+    status: "Público en SUBDERE · copia local pendiente",
+    href: SITE.registryUrl,
+  },
+  {
+    title: "Certificado de vigencia de directorio",
+    detail: `Emitido por la SUBDERE el ${SITE.certifiedOn}. En el Registro se ofrece como “DIRECTORIO 2025–2027”. Vigencia hasta el ${SITE.boardUntil}.`,
+    status: "Público en SUBDERE · copia local pendiente",
+    href: SITE.registryUrl,
+  },
+  {
+    title: "Estatutos vigentes",
+    detail: "Texto completo de los estatutos. En el Registro se ofrece junto al directorio, en “Estatutos y Directorio Vigente”.",
+    status: "Público en SUBDERE · copia local pendiente",
+    href: SITE.registryUrl,
+  },
+  {
+    title: "Decreto Supremo N° 1.161 de 2011",
+    detail: "Reglamento del Ministerio del Interior y Seguridad Pública para las asociaciones municipales con personalidad jurídica de derecho privado. Norma de acceso público.",
+    status: "Texto oficial en BCN",
+    href: SITE.decreeUrl,
+  },
+];
+
+const organs = [
+  ["1", "Asamblea", "Todas las municipalidades socias. Órgano superior."],
+  ["2", "Directorio", "Siete miembros: presidencia, vicepresidencia, secretaría, tesorería y tres direcciones."],
+  ["3", "Secretaría Ejecutiva", SITE.secretary],
+];
+---
+
+<Base
+  title="Transparencia activa"
+  description="Transparencia activa de la Asociación Laja-Diguillín: marco normativo, directorio, socias, presupuesto, cuotas, contrataciones, actas, transferencias y solicitudes de información."
+>
+  <PageIntro
+    kicker="Ley N° 20.285 · artículo 7°"
+    title="Transparencia activa"
+    lede="Una sola página, dividida en nueve bloques. Así se puede actualizar cada mes sin obligar a recorrer subpáginas distintas. Cuando un documento todavía no está cargado en este dominio, se dice expresamente y se indica dónde consta, si ya es público."
+  />
+
+  <nav aria-label="Secciones de transparencia" class="sticky top-28 z-30 border-b border-line bg-paper/95">
+    <ul class="mx-auto flex max-w-6xl gap-2 overflow-x-auto px-5 py-3 sm:px-8">
+      {TRANSPARENCY.map((block) => (
+        <li class="shrink-0">
+          <a href={`#${block.id}`} class="inline-flex min-h-11 items-center border border-line bg-surface px-3 text-sm font-semibold whitespace-nowrap">
+            <span class="mr-2 text-wheat">{block.index}</span>
+            {block.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <section id="marco" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 01</p>
+      <h2 class="mt-2 max-w-3xl font-display text-3xl text-canal">Marco normativo y actos constitutivos</h2>
+      <div class="mt-6 space-y-4 leading-relaxed">
+        <p>En este bloque se publican los actos que dan existencia y régimen a la Asociación. Los archivos originales están en la ficha del Registro SUBDERE; en este sitio queda reservada la copia propia, para cuando la Secretaría Ejecutiva los cargue bajo el dominio {SITE.domain}.</p>
+        <ul class="space-y-3">
+          {docs.map((doc) => (
+            <li class="grid gap-3 border border-line bg-surface p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+              <div>
+                <h3 class="font-display text-xl">{doc.title}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-muted">{doc.detail}</p>
+                <p class="mt-2 text-xs font-bold tracking-wide text-canal uppercase">{doc.status}</p>
+              </div>
+              <a href={doc.href} class="btn btn-line text-sm">Abrir fuente</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="estructura" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 02</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Estructura orgánica y autoridades</h2>
+      <div class="mt-6 space-y-4 leading-relaxed">
+        <p>El directorio lo integran alcaldes y concejales de las municipalidades socias. Duran dos años y pueden ser reelectos. La nómina que sigue es la individualizada al {SITE.certifiedOn}.</p>
+        <div class="overflow-x-auto border border-line">
+          <table class="w-full min-w-[560px] text-left text-sm">
+            <thead class="bg-paper-2 text-xs tracking-widest uppercase">
+              <tr>
+                <th class="px-4 py-3 font-bold">Cargo</th>
+                <th class="px-4 py-3 font-bold">Nombre</th>
+                <th class="px-4 py-3 font-bold">Municipalidad</th>
+                <th class="px-4 py-3 font-bold">Ejercicio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {BOARD.map((member) => (
+                <tr class="border-t border-line bg-surface">
+                  <td class="px-4 py-3 font-semibold">{member.role}</td>
+                  <td class="px-4 py-3">{member.name}</td>
+                  <td class="px-4 py-3">{member.commune}</td>
+                  <td class="px-4 py-3">Hasta el {SITE.boardUntil}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-muted">Tercer director: no individualizado en esta publicación. Ver la nota del <a href="/directorio/" class="font-semibold text-canal underline underline-offset-2">directorio</a>.</p>
+        <div class="border border-line bg-surface p-5">
+          <h3 class="font-display text-2xl text-canal">Secretaría Ejecutiva</h3>
+          <p class="mt-2">{SITE.secretary}. Designación informada en el Registro, conforme a la existencia de secretario ejecutivo que contempla el artículo 14 del Decreto Supremo N° 1.161. Sus funciones son las del artículo 15 del mismo reglamento.</p>
+          <p class="mt-2 text-sm">Contacto: {SITE.email} · {SITE.phoneDisplay}</p>
+        </div>
+        <div>
+          <h3 class="font-display text-2xl">Organigrama</h3>
+          <ol class="mt-4 space-y-3">
+            {organs.map(([n, title, text]) => (
+              <li class="grid grid-cols-[auto_1fr] gap-4 border border-line bg-surface p-4">
+                <span class="flex size-11 items-center justify-center bg-canal font-display text-lg text-paper">{n}</span>
+                <span>
+                  <span class="block font-display text-xl">{title}</span>
+                  <span class="text-sm text-muted">{text}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="socias" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 03</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Municipalidades socias</h2>
+      <div class="mt-6 space-y-4 leading-relaxed">
+        <p>El padrón que se publica como vigente es el de las comunas representadas en el directorio certificado el {SITE.certifiedOn}. El artículo 32 letra d) del reglamento pide, idealmente, el enlace al acta de concejo en que cada municipalidad acordó constituirse o incorporarse. Esas actas todavía no están cargadas en este sitio.</p>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {BOARD.map((member) => (
+            <li class="border border-line bg-surface p-4">
+              <h3 class="font-display text-2xl text-canal">Municipalidad de {member.commune}</h3>
+              <p class="mt-1 text-sm text-muted">Representada en el directorio por {member.name}, {member.role.toLowerCase()}.</p>
+              <p class="mt-3 text-sm font-semibold">Acta de concejo: pendiente de carga</p>
+            </li>
+          ))}
+        </ul>
+        <aside class="border-l-4 border-wheat bg-wheat-soft px-4 py-3 text-sm leading-relaxed">
+          El objeto inscrito menciona a San Ignacio, El Carmen, Bulnes, Pemuco, Yungay, Pinto y Chillán Viejo. Bulnes integra el directorio vigente, en la vicepresidencia, de modo que se publica como socia. Chillán Viejo no se lista como vigente: en el mismo Registro hay un documento titulado “Desafiliación Chillán Viejo”. La Secretaría Ejecutiva puede precisar el padrón definitivo y, si corresponde, reponer la comuna con su acta.
+        </aside>
+      </div>
+    </section>
+
+    <section id="presupuesto" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 04</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Presupuesto y ejecución presupuestaria</h2>
+      <div class="mt-6 border border-dashed border-canal bg-foam/60 p-5">
+        <h3 class="font-display text-2xl text-canal">Presupuesto del ejercicio aún no publicado</h3>
+        <p class="mt-2 text-sm leading-relaxed">A la fecha de esta versión del sitio no hay un presupuesto anual aprobado cargado, ni informes periódicos de ejecución. No se deja el espacio en blanco: la información es, precisamente, que el documento todavía no está disponible aquí. Se incorporará cuando el directorio lo apruebe y, si corresponde, cuando quede ratificado.</p>
+      </div>
+    </section>
+
+    <section id="cuotas" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 05</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Cuotas y aportes de las municipalidades socias</h2>
+      <div class="mt-6 space-y-4 leading-relaxed">
+        <p>El financiamiento de la Asociación descansa en cuotas de las municipalidades socias. Se publican las dos referencias que constan en los antecedentes, porque no dicen lo mismo.</p>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="border border-line bg-surface p-5">
+            <h3 class="font-display text-2xl text-canal">Valor operativo indicado</h3>
+            <p class="mt-3 font-display text-4xl tabular-nums">{SITE.feeMonthly}</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">Cuota ordinaria mensual informada para esta publicación, más las cuotas extraordinarias que pudiera fijar el directorio.</p>
+          </article>
+          <article class="border border-line bg-surface p-5">
+            <h3 class="font-display text-2xl text-canal">Marco del Registro SUBDERE</h3>
+            <p class="mt-3 leading-relaxed">Cuota ordinaria anual de 50 UTM. Las cuotas extraordinarias las determina el directorio y las ratifican los concejos municipales. Su valor no será inferior a 2 UTA ni superior a 100 UTA.</p>
+          </article>
+        </div>
+        <p class="text-sm leading-relaxed text-muted">La Secretaría Ejecutiva debe precisar cuál es el monto exigible del ejercicio en curso. Hasta esa precisión, ambas cifras permanecen visibles. El estado de pago de cada municipalidad no se publica en esta versión.</p>
+      </div>
+    </section>
+
+    <section id="contrataciones" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 06</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Contrataciones y adquisiciones</h2>
+      <div class="mt-6 border border-dashed border-canal bg-foam/60 p-5">
+        <h3 class="font-display text-2xl text-canal">Sin contratos cargados</h3>
+        <p class="mt-2 text-sm leading-relaxed">Este bloque recogerá los contratos de bienes y servicios que suscriba la Asociación: objeto, contraparte, monto y vigencia. Hoy no hay ninguno publicado en el sitio.</p>
+      </div>
+    </section>
+
+    <section id="actas" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 07</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Actas de asamblea y de directorio</h2>
+      <div class="mt-6 border border-dashed border-canal bg-foam/60 p-5">
+        <h3 class="font-display text-2xl text-canal">Sin actas cargadas</h3>
+        <p class="mt-2 text-sm leading-relaxed">Corresponde publicar las sesiones relevantes, en especial aquellas en que se adoptan acuerdos con efecto sobre terceros o sobre las municipalidades socias. Las actas se incorporarán a medida que la Secretaría Ejecutiva las disponga para este sitio.</p>
+      </div>
+    </section>
+
+    <section id="transferencias" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 08</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Transferencias y aportes de fondos públicos</h2>
+      <div class="mt-6 space-y-4">
+        <div class="border border-dashed border-canal bg-foam/60 p-5">
+          <h3 class="font-display text-2xl text-canal">Sin transferencias informadas en esta publicación</h3>
+          <p class="mt-2 text-sm leading-relaxed">Aquí se informará cualquier subvención, transferencia o aporte de entidades públicas nacionales o de fondos concursables. El artículo 25 del Decreto Supremo N° 1.161 condiciona el acceso a ese tipo de recursos a que la inscripción se mantenga vigente. La vigencia publicada del directorio llega hasta el 6 de junio de 2027 y la ficha del Registro N° 11 está activa.</p>
+        </div>
+        <p><a class="font-semibold text-canal underline underline-offset-2" href={SITE.registryUrl}>Comprobar la vigencia en el Registro SUBDERE</a></p>
+      </div>
+    </section>
+
+    <section id="solicitudes" class="scroll-mt-40 border-t border-line py-12">
+      <p class="font-display text-sm text-wheat">Bloque 09</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">Solicitudes de información pública</h2>
+      <div class="mt-6 space-y-4 leading-relaxed">
+        <p>Cualquier persona puede solicitar información, sin necesidad de expresar los motivos. El plazo legal de respuesta es de veinte días hábiles, conforme a la Ley N° 20.285.</p>
+        <dl class="grid gap-4 border border-line bg-surface p-5 sm:grid-cols-2">
+          <div>
+            <dt class="text-xs font-bold tracking-widest text-canal uppercase">Correo habilitado</dt>
+            <dd class="mt-1"><a class="font-semibold underline underline-offset-2" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+            <dd class="mt-1 text-sm text-muted">Es el correo que figura en el Registro. Podrá reemplazarse por uno del dominio {SITE.domain} cuando exista.</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold tracking-widest text-canal uppercase">Responsable</dt>
+            <dd class="mt-1 font-semibold">{SITE.secretary}</dd>
+            <dd class="text-sm text-muted">Secretaria Ejecutiva</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold tracking-widest text-canal uppercase">Plazo</dt>
+            <dd class="mt-1">20 días hábiles</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold tracking-widest text-canal uppercase">Norma</dt>
+            <dd class="mt-1"><a class="underline underline-offset-2" href={SITE.transparencyLawUrl}>Ley N° 20.285</a></dd>
+          </div>
+        </dl>
+        <p class="text-sm">También puede usar el formulario de <a href="/contacto/" class="font-semibold text-canal underline underline-offset-2">contacto</a> eligiendo el asunto “Solicitud de acceso a información”.</p>
+      </div>
+    </section>
+  </div>
+</Base>

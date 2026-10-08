@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Asociación Laja-Diguillín">
+  <rect width="32" height="32" rx="6" fill="#163E32"/>
+  <rect x="4" y="21.5" width="24" height="4.5" rx="2.25" fill="#F3EFE6"/>
+  <rect x="15" y="5.5" width="2" height="14" rx="1" fill="#A36B32"/>
+  <ellipse cx="11.2" cy="10" rx="4.2" ry="1.7" transform="rotate(-38 11.2 10)" fill="#A36B32"/>
+  <ellipse cx="20.8" cy="10" rx="4.2" ry="1.7" transform="rotate(38 20.8 10)" fill="#A36B32"/>
+  <ellipse cx="11.6" cy="14.2" rx="4" ry="1.55" transform="rotate(-32 11.6 14.2)" fill="#A36B32"/>
+  <ellipse cx="20.4" cy="14.2" rx="4" ry="1.55" transform="rotate(32 20.4 14.2)" fill="#A36B32"/>
+</svg>

@@ -1,0 +1,67 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "../components/PageIntro.astro";
+import RefPhoto from "../components/RefPhoto.astro";
+import { PHOTOS, SITE } from "../data/site";
+
+const rows = [
+  ["Correo", SITE.email, `mailto:${SITE.email}`],
+  ["Teléfono", SITE.phoneDisplay, `tel:${SITE.phoneTel}`],
+  ["Dirección", `${SITE.address}, ${SITE.region}`, SITE.mapsUrl],
+  ["Dominio", SITE.domain, SITE.url],
+];
+---
+
+<Base title="Contacto" description={`Contacto de la Asociación Laja-Diguillín: ${SITE.email}, ${SITE.phoneDisplay}, ${SITE.address}.`}>
+  <PageIntro
+    kicker={SITE.domain}
+    title="Contacto"
+    lede="La vía oficial es el correo institucional que figura en el Registro de la SUBDERE. El formulario abre un correo y no guarda el mensaje en el sitio."
+  />
+
+  <section class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-2">
+    <div>
+      <h2 class="font-display text-3xl text-canal">Secretaría Ejecutiva</h2>
+      <p class="mt-2 text-lg">{SITE.secretary}</p>
+      <dl class="mt-8 divide-y divide-line border-y border-line">
+        {rows.map(([label, value, href]) => (
+          <div class="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-4">
+            <dt class="text-xs font-bold tracking-widest text-canal uppercase">{label}</dt>
+            <dd><a class="font-semibold underline-offset-2 hover:underline" href={href}>{value}</a></dd>
+          </div>
+        ))}
+      </dl>
+      <p class="mt-6 text-sm leading-relaxed text-muted">
+        Para una solicitud de acceso a la información pública no hace falta explicar el motivo. Indique qué información necesita y un correo de respuesta. El plazo de la Ley N° 20.285 es de veinte días hábiles.
+      </p>
+      <RefPhoto
+        src={PHOTOS.plaza.src}
+        alt={PHOTOS.plaza.alt}
+        width={PHOTOS.plaza.w}
+        height={PHOTOS.plaza.h}
+        caption="Imagen referencial de un edificio cívico. No es la sede de Serrano N° 300, Chillán Viejo."
+        class="mt-8 min-h-64"
+      />
+    </div>
+
+    <form class="border border-line bg-surface p-5 sm:p-7" action={`mailto:${SITE.email}`} method="post" enctype="text/plain">
+      <h2 class="font-display text-2xl text-canal">Escribir un mensaje</h2>
+      <div class="mt-6 space-y-4">
+        <label class="field">Nombre<input name="nombre" required autocomplete="name" maxlength="120" /></label>
+        <label class="field">Correo de respuesta<input name="correo" type="email" required autocomplete="email" maxlength="160" /></label>
+        <label class="field">
+          Asunto
+          <select name="asunto">
+            <option>Consulta general</option>
+            <option>Solicitud de acceso a información</option>
+            <option>Municipalidad socia</option>
+            <option>Directorio y actas</option>
+          </select>
+        </label>
+        <label class="field">Mensaje<textarea name="mensaje" required maxlength="4000"></textarea></label>
+      </div>
+      <button type="submit" class="btn btn-primary mt-6 w-full sm:w-auto">Preparar correo</button>
+      <p class="mt-4 text-sm text-muted">Se abre un correo dirigido a {SITE.email}. Si el navegador no lo hace, escriba directo a esa dirección. El sitio no conserva el mensaje.</p>
+    </form>
+  </section>
+</Base>

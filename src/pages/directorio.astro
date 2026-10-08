@@ -1,0 +1,95 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "../components/PageIntro.astro";
+import { BOARD, SITE, initials } from "../data/site";
+---
+
+<Base title="Directorio" description={`Directorio de la Asociación Laja-Diguillín vigente hasta el ${SITE.boardUntil}, según certificado SUBDERE del ${SITE.certifiedOn}.`}>
+  <PageIntro
+    kicker={`Certificado SUBDERE · ${SITE.certifiedOn}`}
+    title="Directorio"
+    lede={`Autoridades vigentes hasta el ${SITE.boardUntil}. La tabla replica cargo, nombre, municipalidad y período, con el espacio de la fotografía oficial todavía vacío.`}
+  />
+
+  <section class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {BOARD.map((member) => (
+        <li class="border border-line bg-surface">
+          <div class="flex aspect-[4/3] flex-col items-center justify-center gap-2 border-b border-dashed border-line bg-paper-2">
+            <span class="font-display text-4xl text-canal" aria-hidden="true">{initials(member.name)}</span>
+            <span class="px-4 text-center text-xs font-semibold tracking-wide text-muted uppercase">Espacio para fotografía oficial</span>
+          </div>
+          <div class="p-4">
+            <p class="text-xs font-bold tracking-widest text-canal uppercase">{member.role}</p>
+            <h2 class="mt-1 font-display text-2xl">{member.name}</h2>
+            <p class="mt-1 text-sm text-muted">{member.office} · Municipalidad de {member.commune}</p>
+            <p class="mt-3 text-sm">Período publicado: hasta el {SITE.boardUntil}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-8 overflow-x-auto border border-line bg-surface">
+      <table class="w-full min-w-[640px] text-left text-sm">
+        <caption class="border-b border-line px-4 py-3 text-left font-display text-lg text-canal">Nómina certificada</caption>
+        <thead class="bg-paper-2 text-xs tracking-widest uppercase">
+          <tr>
+            <th class="px-4 py-3 font-bold">Cargo</th>
+            <th class="px-4 py-3 font-bold">Nombre</th>
+            <th class="px-4 py-3 font-bold">Municipalidad</th>
+            <th class="px-4 py-3 font-bold">Período</th>
+          </tr>
+        </thead>
+        <tbody>
+          {BOARD.map((member) => (
+            <tr class="border-t border-line">
+              <td class="px-4 py-3 font-semibold">{member.role}</td>
+              <td class="px-4 py-3">{member.name}</td>
+              <td class="px-4 py-3">{member.office} de {member.commune}</td>
+              <td class="px-4 py-3 tabular-nums">Hasta el {SITE.boardUntil}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <aside class="mt-6 border-l-4 border-wheat bg-wheat-soft px-5 py-4 text-sm leading-relaxed">
+      <p>
+        Vigencia del directorio hasta el {SITE.boardUntil}. La personalidad jurídica consta en la {SITE.resolution}, de {SITE.resolutionDate}. Cualquier persona puede verificar estos antecedentes en el <a class="font-semibold underline underline-offset-2" href={SITE.registryUrl}>Registro Único de Asociaciones Municipales de la SUBDERE</a>, ficha N° {SITE.registry}, donde además están los documentos “DIRECTORIO 2025–2027”, “Estatutos y Directorio Vigente” y “Resolución Personalidad Jurídica”.
+      </p>
+      <p class="mt-3">
+        Los estatutos contemplan siete miembros: presidente, vicepresidente, secretario, tesorero y tres directores, que duran dos años y pueden ser reelectos. Esta publicación individualiza a las seis autoridades nombradas en el certificado del {SITE.certifiedOn}. El nombre del tercer director se completará al incorporar a este sitio el documento de directorio del Registro. No se consigna una vacante porque el cargo puede estar cubierto y solo faltar su publicación aquí.
+      </p>
+    </aside>
+  </section>
+
+  <section class="border-t border-line bg-surface">
+    <div class="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 lg:grid-cols-5">
+      <div class="lg:col-span-2">
+        <p class="kicker">Artículo 14 del DS N° 1.161</p>
+        <h2 class="mt-2 font-display text-3xl text-canal">Secretaría Ejecutiva</h2>
+      </div>
+      <div class="border border-line bg-paper p-6 lg:col-span-3">
+        <p class="text-xs font-bold tracking-widest text-canal uppercase">Secretaria ejecutiva</p>
+        <h3 class="mt-2 font-display text-3xl">{SITE.secretary}</h3>
+        <p class="mt-4 leading-relaxed text-muted">
+          Figura designada en el Registro SUBDERE. Sus funciones son las que fija el artículo 15 del Decreto Supremo N° 1.161 de 2011. Es, además, la persona responsable de recibir y tramitar las solicitudes de información pública dentro del plazo de la Ley N° 20.285.
+        </p>
+        <dl class="mt-6 grid gap-4 text-sm sm:grid-cols-2">
+          <div>
+            <dt class="font-bold">Correo</dt>
+            <dd><a class="underline underline-offset-2" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+          </div>
+          <div>
+            <dt class="font-bold">Teléfono</dt>
+            <dd><a class="underline underline-offset-2" href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a></dd>
+          </div>
+          <div class="sm:col-span-2">
+            <dt class="font-bold">Dirección informada en el Registro</dt>
+            <dd>{SITE.address}, {SITE.region}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</Base>

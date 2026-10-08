@@ -1,0 +1,134 @@
+---
+import "../styles/global.css";
+import { NAV, SITE, isCurrent } from "../data/site";
+
+interface Props {
+  title?: string;
+  description: string;
+  preloadImage?: string;
+}
+
+const { title, description, preloadImage } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE.short}` : SITE.name;
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(path, SITE.url).href} />
+    <meta name="theme-color" content="#163E32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(path, SITE.url).href} />
+    <meta property="og:image" content={new URL("/og.jpg", SITE.url).href} />
+    <meta property="og:locale" content="es_CL" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+    {NAV.filter((item) => !isCurrent(path, item.href)).map((item) => (
+      <link rel="prefetch" href={item.href} />
+    ))}
+  </head>
+  <body>
+    <a href="#contenido" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-3 focus:py-2">
+      Saltar al contenido
+    </a>
+    <header class="sticky top-0 z-40 border-b border-line bg-paper/95">
+      <div class="bg-canal-deep text-paper">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-2 text-xs sm:px-8 sm:text-sm">
+          <p class="truncate">Registro Único de Asociaciones Municipales · N° {SITE.registry} · RUT {SITE.rut}</p>
+          <a class="hidden shrink-0 underline-offset-2 hover:underline sm:inline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+      </div>
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
+        <a href="/" class="flex min-w-0 items-center gap-3">
+          <img src="/favicon.svg" alt="" width="40" height="40" class="size-10 shrink-0" />
+          <span class="min-w-0">
+            <span class="block font-display text-base leading-tight text-canal sm:text-lg">{SITE.short}</span>
+            <span class="block truncate text-xs text-muted sm:text-sm">Territorio de riego · {SITE.region}</span>
+          </span>
+        </a>
+        <nav class="hidden items-center gap-1 lg:flex" aria-label="Principal">
+          {NAV.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                "px-3 py-2 text-sm font-semibold",
+                isCurrent(path, item.href) ? "text-canal underline decoration-wheat decoration-2 underline-offset-8" : "text-ink/80",
+              ]}
+              aria-current={isCurrent(path, item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <details class="relative lg:hidden">
+          <summary class="inline-flex size-11 list-none items-center justify-center border border-line bg-surface">
+            <span class="sr-only">Abrir menú</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </summary>
+          <nav class="absolute right-0 z-50 mt-2 w-64 border border-line bg-surface shadow-none" aria-label="Móvil">
+            {NAV.map((item) => (
+              <a
+                href={item.href}
+                class:list={[
+                  "block border-b border-line px-5 py-3 text-base font-semibold",
+                  isCurrent(path, item.href) && "bg-foam text-canal",
+                ]}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="contenido">
+      <slot />
+    </main>
+    <footer class="bg-canal-deep text-paper">
+      <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-3">
+        <div>
+          <p class="font-display text-2xl text-balance">{SITE.short}</p>
+          <p class="mt-3 text-sm leading-relaxed text-foam">
+            Corporación de derecho privado, sin fines de lucro, constituida al amparo de la Ley N° 18.695 e inscrita en el Registro Único de Asociaciones Municipales bajo el N° {SITE.registry}.
+          </p>
+        </div>
+        <div>
+          <p class="text-xs font-bold tracking-widest text-foam uppercase">Páginas</p>
+          <ul class="mt-3 space-y-2">
+            {NAV.map((item) => (
+              <li><a class="underline-offset-2 hover:underline" href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-bold tracking-widest text-foam uppercase">Contacto</p>
+          <address class="mt-3 space-y-2 text-sm not-italic leading-relaxed">
+            <p>{SITE.address}</p>
+            <p>{SITE.region}</p>
+            <p><a class="underline-offset-2 hover:underline" href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a></p>
+            <p><a class="underline-offset-2 hover:underline" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+            <p>{SITE.domain}</p>
+          </address>
+        </div>
+      </div>
+      <div class="border-t border-foam/20">
+        <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-4 text-xs leading-relaxed text-foam sm:px-8">
+          <p>Las fotografías de paisaje son referenciales y están marcadas como tales. Los retratos oficiales de las autoridades quedan reservados.</p>
+          <p>
+            <a class="underline underline-offset-2" href={SITE.registryUrl}>Ficha en el Registro SUBDERE</a>
+            {" · "}Vigencia del directorio hasta el {SITE.boardUntil}.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

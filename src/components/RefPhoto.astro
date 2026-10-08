@@ -1,0 +1,31 @@
+---
+import { REF_CAPTION } from "../data/site";
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  caption?: string;
+  priority?: boolean;
+}
+
+const { src, alt, width, height, class: className = "", caption = REF_CAPTION, priority = false } = Astro.props;
+---
+
+<figure class:list={["relative overflow-hidden bg-canal-deep", className]}>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? "eager" : "lazy"}
+    decoding="async"
+    fetchpriority={priority ? "high" : "low"}
+    class="h-full w-full object-cover"
+  />
+  <figcaption class="absolute inset-x-0 bottom-0 bg-canal-deep/90 px-3 py-2 text-xs leading-snug text-paper">
+    {caption}
+  </figcaption>
+</figure>

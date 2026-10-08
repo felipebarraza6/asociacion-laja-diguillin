@@ -1,0 +1,76 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "../components/PageIntro.astro";
+import RefPhoto from "../components/RefPhoto.astro";
+import { LINES, PHOTOS, SITE } from "../data/site";
+
+const milestones = [
+  { year: "2000", title: "Convenio constitutivo", text: "El 15 de diciembre de 2000 las municipalidades de la entonces Provincia de Ñuble que comparten el territorio regado por el Canal Laja-Diguillín suscribieron el convenio que dio origen a la Asociación." },
+  { year: "2011", title: "Nuevo marco de las asociaciones", text: "La Ley N° 20.527 modificó la Ley N° 18.695 y reguló las asociaciones municipales. Su artículo primero transitorio permitió adecuar estatutos y obtener personalidad jurídica de derecho privado por el depósito ante la SUBDERE." },
+  { year: "2011–2012", title: "Reglamento y personalidad jurídica", text: `El funcionamiento se rige, en lo pertinente, por el Decreto Supremo N° 1.161 de 2011, del Ministerio del Interior y Seguridad Pública. La Asociación quedó inscrita en el Registro Único bajo el N° ${SITE.registry}, conforme a la ${SITE.resolution} de ${SITE.resolutionDate}.` },
+  { year: "Supletorio", title: "Código Civil", text: "En lo no previsto por la ley orgánica y el reglamento, se aplican de manera supletoria los artículos 549 a 558 del Código Civil." },
+];
+---
+
+<Base title="Quiénes somos" description="Historia, objeto y líneas de acción de la Asociación de Municipalidades Territorio de Riego Canal Laja-Diguillín.">
+  <PageIntro kicker="La corporación" title="Quiénes somos" lede="Una asociación municipal del territorio de riego, con personalidad jurídica de derecho privado y sin fines de lucro." />
+
+  <section class="mx-auto grid max-w-6xl items-start gap-10 px-5 py-14 sm:px-8 lg:grid-cols-12">
+    <div class="space-y-4 leading-relaxed lg:col-span-7">
+      <p>La Asociación de Municipalidades Territorio de Riego Canal Laja-Diguillín fue constituida el {SITE.constituted} mediante convenio suscrito entre municipalidades que comparten el territorio regado por el Canal Laja-Diguillín. Con posterioridad, en uso de la facultad conferida por el artículo primero transitorio de la Ley N° 20.527, adecuó sus estatutos y obtuvo personalidad jurídica de derecho privado por el solo depósito de éstos ante la Subsecretaría de Desarrollo Regional y Administrativo.</p>
+      <p>Quedó formalmente inscrita en el Registro Único de Asociaciones Municipales bajo el N° {SITE.registry}, conforme a la {SITE.resolution} de {SITE.resolutionDate}, tramitada con el expediente {SITE.expediente}. El Registro consigna 2012 como año de constitución de esa personalidad jurídica, RUT {SITE.rut}, y vigencia del directorio hasta el {SITE.boardUntil}.</p>
+      <p>Su objeto es generar y potenciar la capacidad de diseño, articulación, negociación y gestión de recursos e instrumentos de fomento territorial y sectorial para el fortalecimiento competitivo de las comunas asociadas, estimulando el desarrollo de las capacidades de gestión municipal, la actividad económica local y la calidad de vida de la comunidad residente.</p>
+    </div>
+    <RefPhoto src={PHOTOS.detalle.src} alt={PHOTOS.detalle.alt} width={PHOTOS.detalle.w} height={PHOTOS.detalle.h} class="min-h-80 lg:col-span-5" />
+  </section>
+
+  <section class="border-y border-line bg-surface">
+    <div class="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+      <p class="kicker">Línea de tiempo</p>
+      <h2 class="mt-2 font-display text-3xl text-canal">De un convenio entre municipios a una persona jurídica</h2>
+      <ol class="mt-8 grid gap-6 md:grid-cols-2">
+        {milestones.map((item) => (
+          <li class="border-t-2 border-canal pt-4">
+            <p class="font-display text-xl text-wheat">{item.year}</p>
+            <h3 class="mt-1 font-display text-2xl">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
+          </li>
+        ))}
+      </ol>
+      <ul class="mt-8 flex flex-col gap-3 text-sm font-semibold sm:flex-row sm:flex-wrap">
+        <li><a class="underline underline-offset-4" href={SITE.decreeUrl}>Decreto Supremo N° 1.161</a></li>
+        <li><a class="underline underline-offset-4" href={SITE.municipalitiesLawUrl}>Ley N° 18.695, texto refundido</a></li>
+        <li><a class="underline underline-offset-4" href={SITE.law20527Url}>Ley N° 20.527 en SUBDERE</a></li>
+        <li><a class="underline underline-offset-4" href={SITE.registryUrl}>Ficha del Registro N° {SITE.registry}</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+    <p class="kicker">Qué hace</p>
+    <h2 class="mt-2 font-display text-3xl text-canal">Líneas de acción</h2>
+    <ol class="mt-8 grid gap-4 md:grid-cols-2">
+      {LINES.map((line, index) => (
+        <li class="border border-line bg-surface p-5">
+          <p class="font-display text-lg text-wheat">0{index + 1}</p>
+          <h3 class="mt-2 font-display text-2xl">{line.title}</h3>
+          <p class="mt-2 leading-relaxed text-muted">{line.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="bg-canal text-paper">
+    <div class="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 lg:grid-cols-2">
+      <div>
+        <p class="text-xs font-bold tracking-widest text-foam uppercase">Gobierno</p>
+        <h2 class="mt-2 font-display text-3xl text-balance">Un directorio de siete miembros, por dos años</h2>
+        <p class="mt-4 leading-relaxed text-foam">
+          El gobierno está a cargo de un directorio integrado por alcaldes y concejales de las municipalidades socias: presidente, vicepresidente, secretario, tesorero y tres directores. El período publicado vence el {SITE.boardUntil}. La Secretaría Ejecutiva está a cargo de {SITE.secretary}.
+        </p>
+        <a href="/directorio/" class="btn btn-paper mt-6">Ver el directorio</a>
+      </div>
+      <RefPhoto src={PHOTOS.huertos.src} alt={PHOTOS.huertos.alt} width={PHOTOS.huertos.w} height={PHOTOS.huertos.h} class="min-h-64" />
+    </div>
+  </section>
+</Base>

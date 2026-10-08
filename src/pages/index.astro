@@ -1,0 +1,147 @@
+---
+import Base from "../layouts/Base.astro";
+import RefPhoto from "../components/RefPhoto.astro";
+import { BOARD, COMMUNES, LINES, PHOTOS, SITE, TRANSPARENCY, initials } from "../data/site";
+
+const facts = [
+  ["Registro SUBDERE", `N° ${SITE.registry}`],
+  ["Personalidad jurídica", "28.12.2012"],
+  ["RUT", SITE.rut],
+  ["Directorio vigente hasta", "06.06.2027"],
+];
+---
+
+<Base
+  description="Sitio institucional de la Asociación de Municipalidades Territorio de Riego Canal Laja-Diguillín. Registro SUBDERE N° 11. Provincia y Región de Ñuble."
+  preloadImage={PHOTOS.valle.src}
+>
+  <section class="grid lg:grid-cols-2">
+    <div class="furrow order-2 flex flex-col justify-center px-5 py-12 sm:px-8 sm:py-16 lg:order-1 lg:py-20">
+      <div class="mx-auto w-full max-w-xl lg:ml-auto lg:mr-10">
+        <p class="kicker">Provincia de Ñuble · {SITE.region}</p>
+        <h1 class="mt-4 font-display text-4xl text-canal sm:text-5xl">{SITE.name}</h1>
+        <p class="mt-6 text-lg leading-relaxed">
+          Corporación de derecho privado, sin fines de lucro, constituida al amparo de la Ley N° 18.695, Orgánica Constitucional de Municipalidades, e inscrita en el Registro Único de Asociaciones Municipales de la Subsecretaría de Desarrollo Regional y Administrativo (SUBDERE) bajo el N° {SITE.registry}, mediante {SITE.resolution} de fecha {SITE.resolutionDate}.
+        </p>
+        <p class="mt-4 leading-relaxed text-muted">
+          Reúne a municipalidades que comparten el territorio irrigado por el Canal Laja-Diguillín, para facilitar la solución de problemas comunes, potenciar el desarrollo territorial y lograr un mejor aprovechamiento de los recursos disponibles para sus comunas y habitantes.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/quienes-somos/" class="btn btn-primary">Quiénes somos</a>
+          <a href="/transparencia/" class="btn btn-line">Transparencia activa</a>
+        </div>
+      </div>
+    </div>
+    <RefPhoto src={PHOTOS.valle.src} alt={PHOTOS.valle.alt} width={PHOTOS.valle.w} height={PHOTOS.valle.h} priority class="order-1 min-h-72 lg:order-2 lg:min-h-[640px]" />
+  </section>
+
+  <section class="border-y border-line bg-canal text-paper" aria-label="Datos de inscripción">
+    <dl class="mx-auto grid max-w-6xl sm:grid-cols-2 lg:grid-cols-4">
+      {facts.map(([label, value]) => (
+        <div class="border-b border-foam/25 px-5 py-6 sm:px-8 lg:border-r lg:border-b-0">
+          <dt class="text-xs font-bold tracking-widest text-foam uppercase">{label}</dt>
+          <dd class="mt-2 font-display text-2xl tabular-nums">{value}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <p class="kicker">Territorio</p>
+        <h2 class="mt-2 font-display text-3xl text-canal sm:text-4xl">Municipalidades en el directorio</h2>
+      </div>
+      <a href="/directorio/" class="text-sm font-semibold text-canal underline-offset-4 hover:underline">Ver directorio completo</a>
+    </div>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {COMMUNES.map((commune) => (
+        <li class="border border-line bg-surface">
+          <RefPhoto src={commune.photo.src} alt={commune.photo.alt} width={commune.photo.w} height={commune.photo.h} class="h-44" />
+          <div class="p-4">
+            <h3 class="font-display text-2xl text-canal">{commune.name}</h3>
+            <p class="mt-1 text-sm text-muted">{commune.role} del directorio</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
+      Chillán Viejo figura en el objeto inscrito en el Registro y, a la vez, existe allí un documento titulado “Desafiliación Chillán Viejo”. Por eso no se lista aquí como socia vigente. La sede informada sigue siendo {SITE.address}.
+    </p>
+  </section>
+
+  <section class="bg-surface">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-2">
+      <RefPhoto src={PHOTOS.aereo.src} alt={PHOTOS.aereo.alt} width={PHOTOS.aereo.w} height={PHOTOS.aereo.h} class="min-h-72" />
+      <div>
+        <p class="kicker">Para qué existe</p>
+        <h2 class="mt-2 font-display text-3xl text-canal sm:text-4xl">Articular el riego, la gestión municipal y el desarrollo de las comunas</h2>
+        <p class="mt-5 leading-relaxed">
+          La Asociación promueve la articulación, gestión y negociación de instrumentos de fomento productivo, ambiental, turístico y de fortalecimiento de la gestión municipal, en beneficio de las comunidades que representa.
+        </p>
+        <ul class="mt-6 divide-y divide-line border-y border-line">
+          {LINES.map((line) => (
+            <li class="py-4">
+              <h3 class="font-display text-xl">{line.title}</h3>
+              <p class="mt-1 text-sm leading-relaxed text-muted">{line.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <p class="kicker">Directorio hasta el {SITE.boardUntil}</p>
+        <h2 class="mt-2 font-display text-3xl text-canal sm:text-4xl">Autoridades certificadas</h2>
+      </div>
+      <p class="max-w-sm text-sm text-muted">Nómina individualizada en el certificado de la SUBDERE del {SITE.certifiedOn}. El retrato oficial de cada autoridad queda reservado.</p>
+    </div>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {BOARD.map((member) => (
+        <li class="border border-line bg-surface p-4">
+          <div class="flex h-28 flex-col items-center justify-center gap-1 border border-dashed border-line bg-paper-2" aria-hidden="true">
+            <span class="font-display text-3xl text-canal">{initials(member.name)}</span>
+            <span class="text-xs font-semibold tracking-wide text-muted uppercase">Foto oficial pendiente</span>
+          </div>
+          <p class="mt-4 text-xs font-bold tracking-widest text-canal uppercase">{member.role}</p>
+          <h3 class="mt-1 font-display text-2xl">{member.name}</h3>
+          <p class="text-sm text-muted">{member.office} de {member.commune}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="border-t border-line bg-wheat-soft">
+    <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+      <p class="kicker">Ley N° 20.285</p>
+      <h2 class="mt-2 max-w-3xl font-display text-3xl text-canal sm:text-4xl">Transparencia activa, en una sola página y nueve bloques</h2>
+      <p class="mt-4 max-w-3xl text-muted">
+        Organizada según el artículo 7° de la Ley de Transparencia, adaptada a una asociación municipal conforme al artículo 39 del Decreto Supremo N° 1.161 de 2011.
+      </p>
+      <ol class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {TRANSPARENCY.map((block) => (
+          <li>
+            <a href={`/transparencia/#${block.id}`} class="flex h-full gap-3 border border-line bg-surface p-4 hover:border-canal">
+              <span class="font-display text-xl text-wheat">{block.index}</span>
+              <span class="font-semibold leading-snug">{block.title}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-canal text-paper">
+    <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-14 sm:px-8 md:flex-row md:items-center">
+      <div>
+        <p class="text-xs font-bold tracking-widest text-foam uppercase">Manténgase en contacto</p>
+        <h2 class="mt-2 font-display text-3xl text-balance">Secretaría Ejecutiva · {SITE.secretary}</h2>
+        <p class="mt-2 text-foam">{SITE.address} · {SITE.phoneDisplay}</p>
+      </div>
+      <a href="/contacto/" class="btn btn-paper">Escribir a la Asociación</a>
+    </div>
+  </section>
+</Base>
